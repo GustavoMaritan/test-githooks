@@ -55,6 +55,8 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
             });
         }
 
+        if (!fs.existsSync('./logs'))
+            fs.mkdirSync('./logs');
         let logName = `./logs/log-${new Date().getTime()}.json`;
         fs.writeFileSync(logName, JSON.stringify(error, undefined, 4));
         throw `Log em - ${logName}`;
@@ -62,13 +64,18 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
     ls.on('exit', (code) => {
         if (!code) return console.log('Pré Commit OK');
+        throw 'EXITAO';
     });
 })();
 
 process.on('uncaughtException', (err) => {
+    console.log('');
     console.log(err);
+    console.log('');
 });
 
 process.on('unhandledRejection', (err) => {
+    console.log('');
     console.log(err);
+    console.log('');
 });
