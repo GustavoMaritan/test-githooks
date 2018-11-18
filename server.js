@@ -3,9 +3,14 @@ const fs = require('fs');
 const google = require('./google');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
+const Promise = require('promise');
 
-(() => {
-    return false;
+(async () => {
+    return new Promise((res, rej) => {
+
+    });
+
+
 
     // let ls = spawn('npm', ['run', 'eslint'], {
     //     cwd: process.cwd(),
