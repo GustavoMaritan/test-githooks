@@ -18,11 +18,18 @@ let _logName = `./logs/log-${new Date().getTime()}.json`;
             detached: false,
             shell: true
         });
-        return console.log(`Pré commit ok...`);
+        return success(ls1.stdout.toString());
     }
-    throw `Pré commit error... ${_logName}`;
+    throw `
+Pré commit error... ${_logName}
+    `;
 })();
 
+function success() {
+    console.log(``);
+    console.log(`Pré commit ok...`);
+    console.log(``);
+}
 
 function execute(data) {
     if (!rgxDescricao.test(data)) return true;
