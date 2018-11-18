@@ -5,8 +5,6 @@ const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error),
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
 (async () => {
-
-
     let ls = spawn('npm', ['run', 'eslint'], {
         cwd: process.cwd(),
         detached: false,
@@ -14,13 +12,10 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
     });
 
     ls.stdout.on('data', async (data) => {
-        throw 'Vai Nao';
-
-        //        await execute(data);
+        await execute(data);
     });
 
     ls.on('exit', (code) => {
-
         //if (!code) return console.log('Pré Commit OK');
     });
 });
