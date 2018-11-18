@@ -4,22 +4,21 @@ const google = require('./google');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
-(async () => {
-    throw 'kjdfsjghdkjfhgkdfjhg';
+(() => {
+    let ls = spawn('npm', ['run', 'eslint'], {
+        cwd: process.cwd(),
+        detached: false,
+        shell: true
+    });
 
-    // let ls = spawn('npm', ['run', 'eslint'], {
-    //     cwd: process.cwd(),
-    //     detached: false,
-    //     shell: true
-    // });
+    ls.stdout.on('data', async (data) => {
+        if (execute(data))
+            throw 'EXITAOSO 2';
+    });
 
-    // ls.stdout.on('data', async (data) => {
-    //     await execute(data);
-    // });
-
-    // ls.on('exit', (code) => {
-    //     //if (!code) return console.log('Pré Commit OK');
-    // });
+    ls.on('exit', (code) => {
+        //if (!code) return console.log('Pré Commit OK');
+    });
 })();
 
 // process.on('uncaughtException', (err) => {
@@ -33,7 +32,7 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 // });
 
 async function execute(data) {
-    if (!rgxDescricao.test(data)) return;
+    if (!rgxDescricao.test(data)) return true;
 
     let messages = `${data}`.split('\n');
     let descricao = messages.find(x => rgxDescricao.test(x));
@@ -79,5 +78,4 @@ async function execute(data) {
         fs.mkdirSync('./logs');
     let logName = `./logs/log-${new Date().getTime()}.json`;
     fs.writeFileSync(logName, JSON.stringify(error, undefined, 4));
-    throw `Log em - ${logName}`;
 }
