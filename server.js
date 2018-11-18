@@ -1,37 +1,31 @@
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const google = require('./google');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
+let _logName = `./logs/log-${new Date().getTime()}.json`;
 
 (() => {
-    let ls = spawn('npm', ['run', 'eslint'], {
+    let ls = spawnSync('npm', ['run', 'eslint'], {
         cwd: process.cwd(),
         detached: false,
         shell: true
     });
 
-    ls.stdout.on('data', (data) => {
-        execute(data);
-    });
-
-    ls.on('exit', (code) => {
-        //if (!code) return console.log('Pré Commit OK');
-    });
+    if (execute(ls.stdout.toString())) {
+        let ls1 = spawnSync('git', ['add', '.'], {
+            cwd: process.cwd(),
+            detached: false,
+            shell: true
+        });
+        return console.log(`Pré commit ok...`);
+    }
+    throw `Pré commit error... ${_logName}`;
 })();
 
-// process.on('uncaughtException', (err) => {
-//     // console.log(err);
-//     throw 'EXITAOSO 1';
-// });
 
-// process.on('unhandledRejection', (err) => {
-//     //console.log(err);
-//     throw 'EXITAOSO 2';
-// });
-
-async function execute(data) {
-    if (!rgxDescricao.test(data)) return;
+function execute(data) {
+    if (!rgxDescricao.test(data)) return true;
 
     let messages = `${data}`.split('\n');
     let descricao = messages.find(x => rgxDescricao.test(x));
@@ -73,9 +67,8 @@ async function execute(data) {
         });
     }
 
-    if (!fs.existsSync('./logs'))
-        fs.mkdirSync('./logs');
-    let logName = `./logs/log-${new Date().getTime()}.json`;
-    fs.writeFileSync(logName, JSON.stringify(error, undefined, 4));
-    throw 'EXITAOSO 1';
+    if (!fs.existsSync('./logs')) fs.mkdirSync('./logs');
+    fs.writeFileSync(_logName, JSON.stringify(error, undefined, 4));
+
+    return false;
 }
