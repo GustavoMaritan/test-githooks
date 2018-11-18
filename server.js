@@ -64,20 +64,19 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
     ls.on('exit', (code) => {
         if (!code) return console.log('Pré Commit OK');
-        throw 'EXITAO';
     });
-
-    throw 'EXITAOSO';
 })();
 
 process.on('uncaughtException', (err) => {
     console.log('');
     console.log(err);
     console.log('');
+    throw 'EXITAOSO 1';
 });
 
 process.on('unhandledRejection', (err) => {
     console.log('');
     console.log(err);
     console.log('');
+    throw 'EXITAOSO 2';
 });
