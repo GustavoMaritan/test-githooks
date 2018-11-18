@@ -25,19 +25,15 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
     });
 });
 
-// process.on('uncaughtException', (err) => {
-//     console.log('');
-//     // console.log(err);
-//     // console.log('');
-//     throw 'EXITAOSO 1';
-// });
+process.on('uncaughtException', (err) => {
+    // console.log(err);
+    throw 'EXITAOSO 1';
+});
 
-// process.on('unhandledRejection', (err) => {
-//     console.log('');
-//     console.log(err);
-//     console.log('');
-//     throw 'EXITAOSO 2';
-// });
+process.on('unhandledRejection', (err) => {
+    //console.log(err);
+    throw 'EXITAOSO 2';
+});
 
 async function execute(data) {
     if (!rgxDescricao.test(data)) return;
