@@ -10,7 +10,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "node server.js"
+      "pre-commit": "node server.js",
+      "pre-applypatch": "node server.js"
     }
   },
   "repository": {
@@ -31,6 +32,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "promise": "^8.0.2",
     "request": "^2.88.0"
   }
 }

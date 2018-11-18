@@ -11,6 +11,7 @@
     "rules": {
         "require-await": "off",
         "semi": "error",
-        "no-console":"off"
+        "no-console":"off",
+        "no-unused-vars": "off"
     }
 }
