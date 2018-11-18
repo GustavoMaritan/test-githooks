@@ -7,7 +7,7 @@ const Promise = require('promise');
 
 (async () => {
     return new Promise((res, rej) => {
-
+        rej('asdasdasd');
     });
 
 
