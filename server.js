@@ -18,7 +18,6 @@ let _logName = `./logs/log-${new Date().getTime()}.json`;
             detached: true,
             shell: true
         });
-        //984984987498
         return success(ls1.stdout.toString());
     }
     throw `
