@@ -1,0 +1,17 @@
+{
+    "errors": 1,
+    "warnings": 0,
+    "files": [
+        {
+            "filename": "\\src\\core\\usuario\\controller.js",
+            "messages": [
+                {
+                    "key": "4:5",
+                    "message": "'app' is not defined",
+                    "messageBr": "'app' não está definido",
+                    "name": "no-undef"
+                }
+            ]
+        }
+    ]
+}
