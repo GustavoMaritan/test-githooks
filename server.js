@@ -66,6 +66,8 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
         if (!code) return console.log('Pré Commit OK');
         throw 'EXITAO';
     });
+
+    throw 'EXITAOSO';
 })();
 
 process.on('uncaughtException', (err) => {
