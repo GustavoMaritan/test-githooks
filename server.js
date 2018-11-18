@@ -13,12 +13,13 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
         shell: true
     });
 
-    // ls.stdout.on('data', async (data) => {
-    //     await execute(data);
-    // });
+    ls.stdout.on('data', async (data) => {
+        throw 'Vai Nao';
+
+        //        await execute(data);
+    });
 
     ls.on('exit', (code) => {
-        throw 'Vai Nao';
 
         //if (!code) return console.log('Pré Commit OK');
     });
