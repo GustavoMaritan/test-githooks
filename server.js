@@ -3,21 +3,23 @@ const fs = require('fs');
 const google = require('./google');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
+let yyy = false;
 
 (() => {
     let ls = spawn('npm', ['run', 'eslint'], {
         cwd: process.cwd(),
-        detached: false,
+        detached: true,
         shell: true
     });
 
     ls.stdout.on('data', async (data) => {
-        if (execute(data))
-            throw 'EXITAOSO 2';
+        execute(data);
     });
 
     ls.on('exit', (code) => {
         //if (!code) return console.log('Pré Commit OK');
+
+        throw 'EXITAOSO 2';
     });
 })();
 
@@ -78,4 +80,5 @@ async function execute(data) {
         fs.mkdirSync('./logs');
     let logName = `./logs/log-${new Date().getTime()}.json`;
     fs.writeFileSync(logName, JSON.stringify(error, undefined, 4));
+    yyy = true;
 }
