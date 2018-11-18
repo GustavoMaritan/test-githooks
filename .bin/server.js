@@ -3,7 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
-let _logName = `./logs/log-${new Date().getTime()}.json`;
+let _logName = `./logs/log-${new Date().getTime()}.json`, error;
+const colors = require('colors');
 const config = { cwd: process.cwd(), detached: false, shell: true };
 
 (() => {
@@ -17,14 +18,16 @@ const config = { cwd: process.cwd(), detached: false, shell: true };
     config.cwd = path.join(process.cwd(), '.bin');
     spawnSync('node', ['format.js', _logName], config);
 
-    throw `
-Pré commit error... ${_logName}
+    throw ` 
+${colors.red('Pré commit error...')}
+${error.errors} erros encontrados, verifique ${colors.yellow(_logName)}
+para mais informações.
     `;
 })();
 
 function success() {
     console.log(``);
-    console.log(`Pré commit ok...`);
+    console.log(colors.green(`Pré commit ok...`));
     console.log(``);
 }
 
@@ -34,7 +37,7 @@ function execute(data) {
     let messages = `${data}`.split('\n');
     let descricao = messages.find(x => rgxDescricao.test(x));
 
-    let error = {
+    error = {
         errors: +/[0-9]{1,} (errors|error)/.exec(descricao)[0].split(' ')[0],
         warnings: +/[0-9]{1,} (warnings|warning)/.exec(descricao)[0].split(' ')[0],
         files: []
