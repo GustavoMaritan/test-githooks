@@ -5,7 +5,7 @@ const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error),
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
 (async () => {
-    throw 'asdad';
+    throw 'kjdfsjghdkjfhgkdfjhg';
 
     // let ls = spawn('npm', ['run', 'eslint'], {
     //     cwd: process.cwd(),
