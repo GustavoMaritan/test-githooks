@@ -1,25 +1,22 @@
 const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
-const google = require('./google');
+const path = require('path');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 let _logName = `./logs/log-${new Date().getTime()}.json`;
+const config = { cwd: process.cwd(), detached: false, shell: true };
 
 (() => {
-    let ls = spawnSync('npm', ['run', 'eslint'], {
-        cwd: process.cwd(),
-        detached: false,
-        shell: true
-    });
+    let ls = spawnSync('npm', ['run', 'eslint'], config);
 
     if (execute(ls.stdout.toString())) {
-        let ls1 = spawnSync('git', ['add', '.'], {
-            cwd: process.cwd(),
-            detached: true,
-            shell: true
-        });
-        return success(ls1.stdout.toString());
+        spawnSync('git', ['add', '.'], config);
+        return success();
     }
+
+    config.cwd = path.join(process.cwd(), '.bin');
+    spawnSync('node', ['format.js', _logName], config);
+
     throw `
 Pré commit error... ${_logName}
     `;
@@ -46,6 +43,9 @@ function execute(data) {
     let insert;
     for (let i = 0; i < messages.length; i++) {
         const x = messages[i];
+
+        if (x.includes('>')) continue;
+
         if (x.includes(process.cwd())) {
             insert = {
                 filename: x.replace(process.cwd(), ''),
@@ -65,11 +65,9 @@ function execute(data) {
         let values = x.split('error');
         let texts = values[1].trim().split(' ');
         let errorName = texts.pop();
-        //let trad = await google.traducao(texts.join(' ').trim());
         insert.messages.push({
             key: values[0].trim(),
             message: texts.join(' ').trim(),
-            //messageBr: trad[0][0][0],
             name: errorName.trim()
         });
     }

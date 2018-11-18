@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ./src",
-    "server": "node server.js"
+    "server": "node ./.bin/server.js"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "node server.js"
+      "pre-commit": "node ./.bin/server.js"
     }
   },
   "repository": {
