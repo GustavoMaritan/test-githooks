@@ -4,31 +4,33 @@ const google = require('./google');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
-(async () => {
-    let ls = spawn('npm', ['run', 'eslint'], {
-        cwd: process.cwd(),
-        detached: false,
-        shell: true
-    });
+(() => {
+    throw 'fdsfdfsdf';
 
-    ls.stdout.on('data', async (data) => {
-        await execute(data);
-    });
+    // let ls = spawn('npm', ['run', 'eslint'], {
+    //     cwd: process.cwd(),
+    //     detached: false,
+    //     shell: true
+    // });
 
-    ls.on('exit', (code) => {
-        //if (!code) return console.log('Pré Commit OK');
-    });
-});
+    // ls.stdout.on('data', async (data) => {
+    //     await execute(data);
+    // });
 
-process.on('uncaughtException', (err) => {
-    // console.log(err);
-    throw 'EXITAOSO 1';
-});
+    // ls.on('exit', (code) => {
+    //     //if (!code) return console.log('Pré Commit OK');
+    // });
+})();
 
-process.on('unhandledRejection', (err) => {
-    //console.log(err);
-    throw 'EXITAOSO 2';
-});
+// process.on('uncaughtException', (err) => {
+//     // console.log(err);
+//     throw 'EXITAOSO 1';
+// });
+
+// process.on('unhandledRejection', (err) => {
+//     //console.log(err);
+//     throw 'EXITAOSO 2';
+// });
 
 async function execute(data) {
     if (!rgxDescricao.test(data)) return;
