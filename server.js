@@ -5,7 +5,7 @@ const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error),
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 let yyy = false;
 
-(() => {
+(async () => {
     let ls = spawn('npm', ['run', 'eslint'], {
         cwd: process.cwd(),
         detached: true,
@@ -13,25 +13,23 @@ let yyy = false;
     });
 
     ls.stdout.on('data', async (data) => {
-        execute(data);
+        await execute(data);
     });
 
     ls.on('exit', (code) => {
         //if (!code) return console.log('Pré Commit OK');
-
-        throw 'EXITAOSO 2';
     });
 })();
 
-// process.on('uncaughtException', (err) => {
-//     // console.log(err);
-//     throw 'EXITAOSO 1';
-// });
+process.on('uncaughtException', (err) => {
+    // console.log(err);
+    throw 'EXITAOSO 1';
+});
 
-// process.on('unhandledRejection', (err) => {
-//     //console.log(err);
-//     throw 'EXITAOSO 2';
-// });
+process.on('unhandledRejection', (err) => {
+    //console.log(err);
+    throw 'EXITAOSO 2';
+});
 
 async function execute(data) {
     if (!rgxDescricao.test(data)) return true;
