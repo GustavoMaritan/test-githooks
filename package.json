@@ -10,8 +10,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "node server.js",
-      "pre-applypatch": "node server.js"
+      "pre-commit": "node server.js"
     }
   },
   "repository": {
