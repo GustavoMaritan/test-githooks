@@ -15,9 +15,10 @@ let _logName = `./logs/log-${new Date().getTime()}.json`;
     if (execute(ls.stdout.toString())) {
         let ls1 = spawnSync('git', ['add', '.'], {
             cwd: process.cwd(),
-            detached: false,
+            detached: true,
             shell: true
         });
+        //984984987498
         return success(ls1.stdout.toString());
     }
     throw `
