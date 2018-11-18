@@ -6,12 +6,7 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 const Promise = require('promise');
 
 (async () => {
-    return new Promise((res, rej) => {
-        rej('asdasdasd');
-    });
-
-
-
+    throw '';
     // let ls = spawn('npm', ['run', 'eslint'], {
     //     cwd: process.cwd(),
     //     detached: false,
