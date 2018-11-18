@@ -4,27 +4,25 @@ const google = require('./google');
 const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error), [0-9]{1,} ((warnings|warning)\))/g;
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 
-return false;
-
-// (async () => {
+(async () => {
 
 
-//     throw 'Vai Nao';
+    let ls = spawn('npm', ['run', 'eslint'], {
+        cwd: process.cwd(),
+        detached: false,
+        shell: true
+    });
 
-//     // let ls = spawn('npm', ['run', 'eslint'], {
-//     //     cwd: process.cwd(),
-//     //     detached: false,
-//     //     shell: true
-//     // });
+    // ls.stdout.on('data', async (data) => {
+    //     await execute(data);
+    // });
 
-//     // ls.stdout.on('data', async (data) => {
-//     //     await execute(data);
-//     // });
+    ls.on('exit', (code) => {
+        throw 'Vai Nao';
 
-//     // ls.on('exit', (code) => {
-//     //     if (!code) return console.log('Pré Commit OK');
-//     // });
-// });
+        //if (!code) return console.log('Pré Commit OK');
+    });
+});
 
 // process.on('uncaughtException', (err) => {
 //     console.log('');
