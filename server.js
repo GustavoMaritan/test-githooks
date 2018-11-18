@@ -7,7 +7,7 @@ const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 (async () => {
 
 
-    return false;
+    throw 'Vai Nao';
 
     // let ls = spawn('npm', ['run', 'eslint'], {
     //     cwd: process.cwd(),
