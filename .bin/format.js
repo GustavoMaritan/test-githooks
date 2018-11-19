@@ -1,9 +1,11 @@
 const google = require('./google');
 const fs = require('fs');
+const path = require('path');
 
 (async () => {
-    //process.argv[2] = './logs/log-1542582328167.json';
-    let json = fs.readFileSync(process.argv[2], 'utf8');
+    //process.argv[2] = './logs/log-1542624976129.json';
+    let dir = path.join(process.cwd(), process.argv[2]);
+    let json = fs.readFileSync(dir, 'utf8');
 
     if (!json) return;
 
@@ -16,14 +18,10 @@ const fs = require('fs');
             let item = file.messages[j];
             item.messageBr = await google.traducao(item.message);
             item.messageBr = item.messageBr[0][0][0];
-
-            let _items = Object.keys(item);
-            let $items = {};
-            _items.sort().forEach(x => {
-                $items[x] = item[x];
-            });
-            item = $items;
         }
     }
-    fs.writeFileSync(process.argv[2], JSON.stringify(json, undefined, 4));
+
+    while (true) { }
+
+    fs.writeFileSync(dir, JSON.stringify(json, undefined, 4));
 })();
