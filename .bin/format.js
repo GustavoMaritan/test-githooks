@@ -3,10 +3,12 @@ const fs = require('fs');
 const path = require('path');
 
 (async () => {
-    //process.argv[2] = './logs/log-1542624976129.json';
-    let dir = path.join(process.cwd(), process.argv[2]);
+    //process.argv[2] = 'logs/log-1542626137871.json'
+    let caminho = process.cwd().replace('.bin', '');
+    let dir = path.join(caminho, process.argv[2]);
     let json = fs.readFileSync(dir, 'utf8');
 
+    console.log('dir', dir)
     if (!json) return;
 
     json = JSON.parse(json);
@@ -20,8 +22,6 @@ const path = require('path');
             item.messageBr = item.messageBr[0][0][0];
         }
     }
-
-    while (true) { }
 
     fs.writeFileSync(dir, JSON.stringify(json, undefined, 4));
 })();

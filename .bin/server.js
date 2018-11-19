@@ -5,7 +5,7 @@ const rgxDescricao = /[0-9]{1,} ((problems|problem) \()[0-9]{1,} (errors|error),
 const rgxMessage = /[0-9]{1,}:[0-9]{1,}( ){1,}(error|errors)( ){2}/;
 let _logName = `./logs/log-${new Date().getTime()}.json`, error;
 const colors = require('colors');
-const config = { cwd: process.cwd(), detached: true, shell: true };
+const config = { cwd: process.cwd(), detached: false, shell: true };
 
 (() => {
     let ls = spawnSync('npm', ['run', 'eslint'], config);
@@ -15,8 +15,11 @@ const config = { cwd: process.cwd(), detached: true, shell: true };
         return success();
     }
 
-    config.cwd = path.join(process.cwd(), '.bin');
-    spawnSync('node', ['format.js', _logName], config);
+    let a = spawnSync('node', ['format.js', _logName], {
+        cwd: path.join(process.cwd(), '.bin'),
+        detached: false,
+        shell: true
+    });
 
     throw ` 
 ${colors.red('Pré commit error...')}
