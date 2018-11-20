@@ -12,6 +12,6 @@
         "require-await": "off",
         "semi": "error",
         "no-console":"off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "error"
     }
 }
