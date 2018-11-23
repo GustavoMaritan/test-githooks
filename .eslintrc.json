@@ -1,17 +1,47 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 2018
-    },
-    "rules": {
-        "require-await": "off",
-        "semi": "error",
-        "no-console":"off",
-        "no-unused-vars": "error"
-    }
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"extends": "eslint:recommended",
+	"parserOptions": {
+		"ecmaVersion": 2018
+	},
+	"rules": {
+		"no-delete-var": "error",
+		"require-await": "off",
+		"semi": "off",
+		"no-console": "error",
+		"no-unused-vars": "error",
+		"no-extra-semi": "off",
+		"complexity": ["off", { "max": 2 }],
+		"skipBlankLines": true,
+		"no-self-assign": "off",
+		"no-unreachable": "off",
+		"no-constant-condition": "off",
+		"max-lines-per-function": [
+			"error",
+			{
+				"max": 50,
+				"skipBlankLines": true,
+				"skipComments": true
+			}
+		],
+		"max-nested-callbacks": ["error", 1],
+		"max-len": [
+			"error",
+			{
+				"code": 20,
+				"comments": 300,
+				"tabWidth": 4,
+				"ignoreUrls": true,
+				"ignoreRegExpLiterals": true,
+				"ignorePattern": "^\\s*const\\s.+=\\s*require\\s*\\(",
+				"ignoreStrings": false,
+				"ignoreTemplateLiterals": true
+			}
+		]
+
+	}
 }
